@@ -16,3 +16,9 @@
     color:#49557e;
     font-size:18px;
 }
+
+.navbar .active{
+    font-weight: 600;
+    border-bottom: 2px solid tomato;
+    padding-bottom: 5px;
+}

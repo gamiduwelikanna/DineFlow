@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 *{
   padding:0;
   margin:0;
   box-sizing:border-box;
+  font-family: Outfit;
 }
 body{
   min-height: 100vh;
@@ -14,4 +16,29 @@ a{
 .app{
   width:80%;
   margin:auto;
+}
+
+.navbar-right{
+  display:flex;
+  align-items: center;
+  gap:40px;
+}
+
+
+.navbar button{
+  background: transparent;
+  font-size: 16px;
+  color: #49557e;
+  border: 1px solid tomato;
+  padding: 10px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+}
+
+.navbar button:hover{
+  background: tomato;
+  color: white;
+  transition: all 0.3s ease-in-out;
 }
