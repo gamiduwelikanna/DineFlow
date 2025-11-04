@@ -22,3 +22,46 @@
     border-bottom: 2px solid tomato;
     padding-bottom: 5px;
 }
+
+.navbar-right{
+  display:flex;
+  align-items: center;
+  gap:40px;
+}
+
+
+.navbar button{
+  background: transparent;
+  font-size: 16px;
+  color: #49557e;
+  border: 1px solid tomato;
+  padding: 10px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+}
+
+.navbar button:hover{
+  background: tomato;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar li{
+    cursor: pointer;
+}
+
+.navbar-search-icon{
+  position: relative;
+}
+
+.navbar-search-icon .dot{
+    position: absolute;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: tomato;
+    border-radius: 5px;
+    top: -8px;
+    right: -8px;
+}
