@@ -24,6 +24,11 @@ ineFlow\frontend\src\components\ExploreMenu\ExploreMenu.css
     margin: 20px 0px;
     overflow-x: scroll;
 }
+
+.explore-menu-list::-webkit-scrollbar {
+    display: none;
+}
+
 .explore-menu-list-item img {
     width: 7.5vw;
     min-width: 80px;
