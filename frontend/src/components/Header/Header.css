@@ -2,8 +2,11 @@
     height: 34vw;
     margin: 30px auto;
     background: url('/header_img.png') no-repeat;
-    background-size: contain;
+    background-size: cover;
+    background-position: center;
     position:relative;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .header-contents{
@@ -23,11 +26,13 @@
     font-weight: 500;
     color: #ffffff;
     font-size: max(4.5vw, 22px);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .header-contents p{
     font-size: max(1.8vw, 16px);
     color: #ffffff;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
 }
 
 .header-contents button{
@@ -37,4 +42,108 @@
     border: none;
     border-radius: 50px;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.header-contents button:hover{
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 1050px) {
+    
+    .header-contents{
+        max-width: 55%;
+        gap: 1.5vw;
+    }
+
+    .header-contents h2{
+        font-size: max(4vw, 20px);
+    }
+
+    .header-contents p{
+        font-size: max(1.6vw, 14px);
+    }
+
+    .header-contents button{
+        padding: 1.2vw 2.5vw;
+        font-size: max(1vw, 13px);
+    }
+}
+
+@media (max-width: 900px) {
+    .header{
+        height: 42vw;
+    }
+
+    .header-contents{
+        max-width: 60%;
+        gap: 1.2vw;
+    }
+
+    .header-contents h2{
+        font-size: max(3.5vw, 18px);
+    }
+
+    .header-contents p{
+        font-size: max(1.4vw, 13px);
+    }
+
+    .header-contents button{
+        padding: 1.5vw 2.8vw;
+        font-size: max(1vw, 12px);
+    }
+}
+
+@media (max-width: 750px) {
+    .header{
+        height: 50vw;
+    }
+
+    .header-contents{
+        max-width: 65%;
+        bottom: 8%;
+        left: 5vw;
+    }
+
+    .header-contents h2{
+        font-size: max(3vw, 16px);
+    }
+
+    .header-contents p{
+        font-size: max(1.2vw, 12px);
+    }
+
+    .header-contents button{
+        padding: 2vw 3.5vw;
+        font-size: max(0.9vw, 11px);
+    }
+}
+
+@media (max-width: 500px) {
+    .header{
+        height: 60vw;
+    }
+
+    .header-contents{
+        max-width: 80%;
+        bottom: 5%;
+        left: 4vw;
+        gap: 2vw;
+    }
+
+    .header-contents h2{
+        font-size: 18px;
+    }
+
+    .header-contents p{
+        font-size: 12px;
+    }
+
+    .header-contents button{
+        padding: 8px 20px;
+        font-size: 11px;
+    }
 }
