@@ -7,7 +7,7 @@
 }
 html{
   scroll-behavior: smooth;
-  scroll-padding-top: 230px;
+  scroll-padding-top: 180px;
 }
 body{
   min-height: 100vh;
