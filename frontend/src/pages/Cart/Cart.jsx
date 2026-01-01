@@ -33,7 +33,34 @@ const Cart = () => {
           }
           return null;
         })}
-
+        <div className="cart-bottom">
+          <div className='cart-total'></div>
+          <h2>Cart Total</h2>
+          <div className="cart-total-details">
+            <p>Sub Total</p>
+            <p>{0}</p>
+          </div>
+          <hr/>
+          <div className="cart-total-details">
+            <p>Delivery Fee</p>
+            <p>{2}</p>
+          </div>
+          <hr/>
+          <div className="cart-total-details">
+            <b>Total</b>
+            <b>{0}</b>
+          </div>
+          <button>Proceed to Checkout</button>
+        </div>
+        <div className='cart-promocode'>
+          <div>
+            <p>If you have a promocode, Enter it here</p>
+            <div className='cart-promocode-input'>
+              <input type='text' placeholder='promocode'/>
+              <button>Submit</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
