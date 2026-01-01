@@ -1,12 +1,34 @@
 import React from 'react'
 import './Cart.css'
 import { StoreContext } from '../../context/StoreContext'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
   const {cartItems, food_list, removeFromCart, getTotalCartAmount} = React.useContext(StoreContext)
    
+  const navigate = useNavigate();
+  const [showMessage, setShowMessage] = React.useState(false);
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleCheckout = () => {
+    if (getTotalCartAmount() > 0) {
+      navigate('/place-order');
+    } else {
+      setShowMessage(true);
+      setTimeout(() => setShowMessage(false), 3000);
+    }
+  };
+
   return (
     <div className="cart">
+      {showMessage && (
+        <div className="cart-empty-message">
+          Your cart is empty. Add items to proceed!
+        </div>
+      )}
       <div className="cart-items">
         <div className="cart-items-title">
           <p>Items</p>
@@ -45,15 +67,15 @@ const Cart = () => {
             <hr/>
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${2}</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
             <hr/>
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount()+2}</b>
+              <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
             </div>
           </div>
-          <button>PROCEED TO CHECKOUT</button>
+          <button onClick={handleCheckout}>PROCEED TO CHECKOUT</button>
         </div>
         <div className='cart-promocode'>
           <div>
