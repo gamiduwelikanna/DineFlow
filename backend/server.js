@@ -15,9 +15,9 @@ app.use(express.json());
 //db config
 connectDB();
 
-
 //api endpoint
 app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"));
 
 app.get('/', (req, res) => {
     res.status(200).send('DineFlow Backend is running. API is working fine.');
