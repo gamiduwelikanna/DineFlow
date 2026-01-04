@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { connectDB } from './config/db.js';
+import foodRouter from './routes/foodRoute.js';
 
 //app conifg
 const app = express();
@@ -13,6 +14,10 @@ app.use(express.json());
 
 //db config
 connectDB();
+
+
+//api endpoint
+app.use("/api/food", foodRouter);
 
 app.get('/', (req, res) => {
     res.status(200).send('DineFlow Backend is running. API is working fine.');
