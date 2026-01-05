@@ -3,6 +3,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { connectDB } from './config/db.js';
 import foodRouter from './routes/foodRoute.js';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 //app conifg
 const app = express();
@@ -26,6 +30,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`DineFlow Backend is running on  http://localhost:${PORT}`);
 });
-
-//mongodb+srv://dineflow:45121556Aa#@cluster0.c4dnmu5.mongodb.net/?
-//mongodb+srv://dineflow:45121556Aa#@cluster0.c4dnmu5.mongodb.net/?appName=Cluster0
