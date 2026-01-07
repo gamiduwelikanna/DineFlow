@@ -1,0 +1,59 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 4%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.navbar .logo {
+  width: 80px;
+  cursor: pointer;
+}
+
+.navbar-title {
+  font-size: 16px;
+  color: #000000;
+  font-weight: 450;
+  margin: 0;
+}
+
+.navbar .profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.navbar .profile:hover {
+  border-color: tomato;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .navbar .logo {
+    width: 100px;
+  }
+
+  .navbar .profile {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar {
+    padding: 12px 3%;
+  }
+}
