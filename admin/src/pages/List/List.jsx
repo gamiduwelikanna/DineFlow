@@ -3,16 +3,20 @@ import './List.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const List = () => {
-  const url = "http://localhost:4000";
+const List = ({url}) => {
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
-    const response = await axios.get(`${url}/api/food/list`);
-    if (response.data.success) {
-      setList(response.data.foods);
-    } else {
-      toast.error("Error fetching food list");
+    try {
+      const response = await axios.get(`${url}/api/food/list`);
+      if (response.data.success) {
+        setList(response.data.foods);
+      } else {
+        toast.error("Error fetching food list");
+      }
+    } catch (error) {
+      console.error("Error fetching list:", error);
+      toast.error("Failed to fetch food list");
     }
   };
 
