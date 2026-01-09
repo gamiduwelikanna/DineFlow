@@ -27,6 +27,11 @@
   background-color: #f0f0f0;
 }
 
+.sidebar-option.active {
+  background-color: #fff4f2;
+  border-color: tomato;
+}
+
 @media (max-width: 900px) {
     .navbar .logo{
         width: 120px;
