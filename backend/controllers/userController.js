@@ -60,13 +60,15 @@ export const registerUser = async (req, res) => {
             return res.status(400).json({message: "Invalid email format"});
         }
 
+        // Validate password length
+        if(password.length < 6){
+            return res.status(400).json({message: "Password must be at least 6 characters long"});
+        }
+
+        // Check if user already exists
         const existingUser = await userModel.findOne({email});
         if (existingUser) {
             return res.status(409).json({message: "Email already in use"});
-        }
-
-        if(password.length < 6){
-            return res.status(400).json({message: "Password must be at least 6 characters long"});
         }
 
         // Hash the password before saving
@@ -78,10 +80,17 @@ export const registerUser = async (req, res) => {
             password: hashedPassword,
         });
 
-        const user = await newUser.save();
-        const token = createToken(user._id);
-
-        res.status(201).json({success:true,token});
+        try {
+            const user = await newUser.save();
+            const token = createToken(user._id);
+            res.status(201).json({success: true, message: "User registered successfully"});
+        } catch (saveError) {
+            // Handle duplicate key error from MongoDB
+            if (saveError.code === 11000) {
+                return res.status(409).json({message: "Email already in use"});
+            }
+            throw saveError;
+        }
     } catch (error) {
         res.status(500).json({message: "Server error", error: error.message});
     }
