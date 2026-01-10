@@ -1,4 +1,4 @@
-import userModel from "../models/userModel";
+import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import validator from "validator";
@@ -44,6 +44,12 @@ export const loginUser = async (req, res) => {
     }
 };
 
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+    });
+}
+
 //register user
 export const registerUser = async (req, res) => {
     try {
@@ -57,10 +63,6 @@ export const registerUser = async (req, res) => {
         const existingUser = await userModel.findOne({email});
         if (existingUser) {
             return res.status(409).json({message: "Email already in use"});
-        }
-
-        if((!validator).isEmail(email)){
-            return res.status(400).json({message: "Invalid Email format"});
         }
 
         if(password.length < 6){
@@ -77,11 +79,10 @@ export const registerUser = async (req, res) => {
         });
 
         const user = await newUser.save();
+        const token = createToken(user._id);
 
-        res.status(201).json({message: "User registered successfully", user});
+        res.status(201).json({success:true,token});
     } catch (error) {
         res.status(500).json({message: "Server error", error: error.message});
     }
 };
-
-export {loginUser, registerUser};
