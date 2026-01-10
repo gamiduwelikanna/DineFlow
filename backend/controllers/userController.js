@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
 //register user
 export const registerUser = async (req, res) => {
     try {
-        const {name, email, password} = req.body;
+        const {name, password, email} = req.body;
 
         // Validate email format
         if (!validator.isEmail(email)) {
@@ -59,17 +59,26 @@ export const registerUser = async (req, res) => {
             return res.status(409).json({message: "Email already in use"});
         }
 
+        if((!validator).isEmail(email)){
+            return res.status(400).json({message: "Invalid Email format"});
+        }
+
+        if(password.length < 6){
+            return res.status(400).json({message: "Password must be at least 6 characters long"});
+        }
+
+        // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new userModel({
-            name,
-            email,
-            password: hashedPassword
+            name: name,
+            email: email,
+            password: hashedPassword,
         });
 
-        await newUser.save();
+        const user = await newUser.save();
 
-        res.status(201).json({message: "User registered successfully"});
+        res.status(201).json({message: "User registered successfully", user});
     } catch (error) {
         res.status(500).json({message: "Server error", error: error.message});
     }
