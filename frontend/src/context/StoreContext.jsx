@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { food_list } from '../assets/assets';
+
 
 export const StoreContext = createContext(null);
 
@@ -8,6 +8,7 @@ const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const url = 'http://localhost:4000'
     const [token, setToken] = useState("");
+    const [food_list, setFoodList] = useState([]);
 
     const addToCart = (itemId) => {
         if (!cartItems[itemId]) {
@@ -35,16 +36,37 @@ const StoreContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let itemInfo = food_list.find((food) => food._id === item);
-                totalAmount += cartItems[item] * itemInfo.price;
+                if (itemInfo) {
+                    totalAmount += cartItems[item] * itemInfo.price;
+                }
             }
         }
         return totalAmount;
     }
 
-    useEffect(() => {
-        if (localStorage.getItem("token")) {
-            setToken(localStorage.getItem("token"));
+    const fetchFoodList = async () => {
+        try {
+            const response = await fetch(`${url}/api/food/list`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch food list');
+            }
+            const data = await response.json();
+            if (data.success && data.foods) {
+                setFoodList(data.foods);
+            }
+        } catch (error) {
+            console.error("Error fetching food items:", error);
         }
+    }
+
+    useEffect(() => {
+        async function loadData() {
+            await fetchFoodList();
+            if (localStorage.getItem("token")) {
+            setToken(localStorage.getItem("token"));
+            }
+        }
+        loadData();
     }, []);
 
     const contextValue = {
