@@ -9,7 +9,7 @@ const Navbar = ({setShowLogin}) => {
   const[menu,setMenu] = useState("menu");
   const[showMenu,setShowMenu] = useState(false);
 
-  const{getTotalCartAmount} = React.useContext(StoreContext);
+  const{getTotalCartAmount,token, setToken} = React.useContext(StoreContext);
   
   return (
     <div className='navbar'>
@@ -26,7 +26,20 @@ const Navbar = ({setShowLogin}) => {
           <Link to='/cart'><img src={assets.basket_icon} alt=""/></Link>
           <div className={getTotalCartAmount() > 0 ? "dot" : ""}></div>
         </div>
-        <button onClick={()=>setShowLogin(true)}>Sign In</button>
+         {!token ? <button onClick={()=>setShowLogin(true)}>Sign In</button> 
+         : <div>
+                <img src={assets.user_icon} alt="" className='user-icon'/>
+                <ul className='nav-profile-dropdown'></ul>
+                  <li><img src={assets.bag_icon} alt=""/></li>
+                  <hr/>
+                  <li><img src={assets.logout_icon} alt=""/></li>
+
+                <button onClick={()=>{
+                  setToken("");
+                  localStorage.removeItem("token");
+                }}>Logout</button>
+          
+          </div>}
         <div className={`hamburger ${showMenu ? 'active' : ''}`} onClick={()=>setShowMenu(!showMenu)}>
           <span></span>
           <span></span>
