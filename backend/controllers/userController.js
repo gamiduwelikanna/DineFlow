@@ -8,28 +8,30 @@ export const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body;
 
+        // Check if email and password are provided
+        if (!email || !password) {
+            return res.status(400).json({success: false, message: "Email and password are required"});
+        }
+
         // Validate email format
         if (!validator.isEmail(email)) {
-            return res.status(400).json({message: "Invalid email format"});
+            return res.status(400).json({success: false, message: "Invalid email format"});
         }
 
         const user = await userModel.findOne({email});
         if (!user) {
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({success: false, message: "User not found"});
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({message: "Invalid password"});
+            return res.status(401).json({success: false, message: "Invalid password"});
         }
 
-        const token = jwt.sign(
-            {userId: user._id, email: user.email},
-            process.env.JWT_SECRET,
-            {expiresIn: "1h"}
-        );
+        const token = createToken(user._id);
 
         res.status(200).json({
+            success: true,
             message: "Login successful",
             token,
             user: {
@@ -40,7 +42,7 @@ export const loginUser = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({message: "Server error", error: error.message});
+        res.status(500).json({success: false, message: "Server error", error: error.message});
     }
 };
 
@@ -57,18 +59,18 @@ export const registerUser = async (req, res) => {
 
         // Validate email format
         if (!validator.isEmail(email)) {
-            return res.status(400).json({message: "Invalid email format"});
+            return res.status(400).json({success: false, message: "Invalid email format"});
         }
 
         // Validate password length
         if(password.length < 6){
-            return res.status(400).json({message: "Password must be at least 6 characters long"});
+            return res.status(400).json({success: false, message: "Password must be at least 6 characters long"});
         }
 
         // Check if user already exists
         const existingUser = await userModel.findOne({email});
         if (existingUser) {
-            return res.status(409).json({message: "Email already in use"});
+            return res.status(409).json({success: false, message: "Email already in use"});
         }
 
         // Hash the password before saving
@@ -83,16 +85,16 @@ export const registerUser = async (req, res) => {
         try {
             const user = await newUser.save();
             const token = createToken(user._id);
-            res.status(201).json({success: true, message: "User registered successfully"});
+            res.status(201).json({success: true, token, message: "User registered successfully"});
         } catch (saveError) {
             // Handle duplicate key error from MongoDB
             if (saveError.code === 11000) {
-                return res.status(409).json({message: "Email already in use"});
+                return res.status(409).json({success: false, message: "Email already in use"});
             }
             throw saveError;
         }
     } catch (error) {
-        res.status(500).json({message: "Server error", error: error.message});
+        res.status(500).json({success: false, message: "Server error", error: error.message});
     }
 };
 

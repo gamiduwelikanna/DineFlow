@@ -178,3 +178,116 @@
     }
 }
 
+/* Profile Dropdown Styles */
+.navbar-profile {
+    position: relative;
+    cursor: pointer;
+    margin-left: -15px;
+    margin-right: 20px;
+}
+
+.navbar-profile .profile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.navbar-profile:hover .profile-icon {
+    transform: scale(1.05);
+}
+
+.nav-profile-dropdown {
+    position: absolute;
+    display: none;
+    right: 0;
+    top: 50px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 12px 0;
+    min-width: 180px;
+    z-index: 1000;
+    list-style: none;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar-profile:hover .nav-profile-dropdown {
+    display: block;
+}
+
+.nav-profile-dropdown li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #49557e;
+}
+
+.nav-profile-dropdown li:hover {
+    background-color: #fff5f5;
+    color: tomato;
+}
+
+.nav-profile-dropdown li img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+}
+
+.nav-profile-dropdown li:hover img {
+    opacity: 1;
+}
+
+.nav-profile-dropdown li p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.nav-profile-dropdown hr {
+    margin: 8px 12px;
+    border: none;
+    border-top: 1px solid #efefef;
+}
+
+/* Mobile responsive for profile dropdown */
+@media (max-width: 750px) {
+    .nav-profile-dropdown {
+        min-width: 160px;
+        top: 45px;
+    }
+    
+    .navbar-profile .profile-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .nav-profile-dropdown li {
+        padding: 10px 16px;
+        gap: 10px;
+    }
+    
+    .nav-profile-dropdown li img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .nav-profile-dropdown li p {
+        font-size: 14px;
+    }
+}
+
