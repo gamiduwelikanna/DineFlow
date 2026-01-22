@@ -25,7 +25,7 @@ connectDB();
 app.use("/api/food", foodRouter);
 app.use("/images", express.static("uploads"));
 app.use("/api/user", userRouter);
-app.use("/api/cart", cartRouter); 
+//app.use("/api/cart", cartRouter); 
 
 app.get('/', (req, res) => {
     res.status(200).send('DineFlow Backend is running. API is working fine.');
