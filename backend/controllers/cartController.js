@@ -40,6 +40,14 @@ const removeFromCart = async (req, res) => {
 
 
 //fetch cart data
-const getCart = async (req, res) =>{}
+const getCart = async (req, res) =>{
+    try{
+        let UserData = await userModel.findById({ _id: req.userId });
+        let cartData = await UserData.cartData;
+        res.status(200).json({ cartData });
+    }catch(error){
+        res.status(500).json({ message: "Error fetching cart data", error: error.message });
+    }
+}
 
 export { addToCart, removeFromCart , getCart};
