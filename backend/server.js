@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import userRouter from './routes/userRoutes.js';
 import cartRouter from './routes/cartRoute.js';
 import 'dotenv/config';
+import orderRouter from './routes/orderRoute.js';
 
 // Load environment variables
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/api/food", foodRouter);
 app.use("/images", express.static("uploads"));
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter); 
+app.use("/api/order", orderRouter); 
 
 app.get('/', (req, res) => {
     res.status(200).send('DineFlow Backend is running. API is working fine.');
