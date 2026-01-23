@@ -10,13 +10,12 @@ const placeOrder = async (req, res) => {
     const frontend_url = "http://localhost:5173";
     try{
         const newOrder = new orderModel({
-            userId : req.body.userId,
+            userId : req.userId,
             items : req.body.items,
             amount : req.body.amount,
             address : req.body.address
         });
         await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
         const line_items = req.body.items.map((item) => ({
             price_data: {
@@ -43,4 +42,28 @@ const placeOrder = async (req, res) => {
     }
 }
 
-export {placeOrder};
+const verifyOrder = async (req, res) => {
+    const { orderId, success } = req.query;
+    try {
+        const order = await orderModel.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        if (success === 'true') {
+            order.payment = true;
+            order.status = "Order Placed";
+            await order.save();
+            await userModel.findByIdAndUpdate(order.userId, { cartData: {} });
+            return res.status(200).json({ success: true, message: "Payment successful and order verified" });
+        } else {
+            await orderModel.findByIdAndDelete(orderId);
+            return res.status(200).json({ success: false, message: "Payment failed, order cancelled" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Error verifying order" });
+    }
+}
+
+export {placeOrder, verifyOrder};
