@@ -9,6 +9,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const placeOrder = async (req, res) => { 
     const frontend_url = "http://localhost:5173";
     try{
+        // Delete any existing unpaid orders for this user
+        await orderModel.deleteMany({ userId: req.userId, payment: false });
+
         const newOrder = new orderModel({
             userId : req.userId,
             items : req.body.items,

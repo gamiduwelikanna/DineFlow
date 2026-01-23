@@ -4,6 +4,12 @@
     place-items: center;
 }
 
+.verify h2 {
+    color: tomato;
+    font-size: 2rem;
+    text-align: center;
+}
+
 .spinner {
     width: 50px;
     height: 50px;

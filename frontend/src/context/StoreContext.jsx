@@ -68,8 +68,11 @@ const StoreContextProvider = (props) => {
     }
 
     const loadCartData = async (token) => {
+        console.log('Loading cart data from backend...');
         const response = await axios.post(`${url}/api/cart/get`, {}, {headers: {token}});
+        console.log('Backend cart data:', response.data.cartData);
         setCartItems(response.data.cartData);
+        console.log('Cart items updated in state');
     }
 
     useEffect(() => {
@@ -92,7 +95,8 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        loadCartData
     };
 
     return (
