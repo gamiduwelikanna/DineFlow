@@ -20,9 +20,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//db config
-connectDB();
-
 //api endpoint
 app.use("/api/food", foodRouter);
 app.use("/images", express.static("uploads"));
@@ -34,6 +31,17 @@ app.get('/', (req, res) => {
     res.status(200).send('DineFlow Backend is running. API is working fine.');
 });
 
-app.listen(PORT, () => {
-    console.log(`DineFlow Backend is running on  http://localhost:${PORT}`);
-});
+//db config and start server
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            console.log(`DineFlow Backend is running on  http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+};
+
+startServer();
