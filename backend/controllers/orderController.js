@@ -66,7 +66,20 @@ const verifyOrder = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: "Error verifying order" });
+    }ß
+}
+
+
+//user order for frontend
+
+const userOrders = async (req, res) => {
+    try {
+        const orders = await orderModel.find({ userId: req.userId }).sort({ date: -1 });
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Error fetching user orders" });
     }
 }
 
-export {placeOrder, verifyOrder};
+export {placeOrder, verifyOrder, userOrders};
