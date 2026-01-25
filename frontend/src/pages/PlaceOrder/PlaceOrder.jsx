@@ -28,6 +28,15 @@ const PlaceOrder = () => {
     setData({...data, [name]: value});
   }
 
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/cart')
+    }
+    else if(getTotalCartAmount() === 0) {
+      navigate('/cart')
+    }
+  }, [token]);
+
   const placeOrder = async (e) => {
     e.preventDefault();
     let orderItems = [];

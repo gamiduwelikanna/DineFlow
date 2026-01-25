@@ -11,8 +11,11 @@ const Verify = () => {
   const { url, token, loadCartData, setCartItems } = React.useContext(StoreContext);
   const navigate = useNavigate();
   const [message, setMessage] = React.useState('');
+  const [verified, setVerified] = React.useState(false);
 
   const verifyPayment = async () => {
+    if (verified) return; // Prevent multiple calls
+    
     console.log('Starting verification...', { success, orderId });
     try {
       const response = await axios.get(url + '/api/order/verify', {
@@ -21,37 +24,46 @@ const Verify = () => {
       console.log('Verification response:', response.data);
       
       if (response.data.success) {
+        setVerified(true);
         setMessage('Payment Verified! Redirecting...');
         console.log('Clearing cart...');
         // Clear cart immediately in frontend
         setCartItems({});
         // Wait a bit for backend to complete, then refresh cart data
-        if (token) {
-          await new Promise(resolve => setTimeout(resolve, 500));
-          await loadCartData(token);
-          console.log('Cart reloaded from backend');
+        try {
+          if (token && loadCartData) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await loadCartData(token);
+            console.log('Cart reloaded from backend');
+          } else {
+            console.log('No token available, skipping cart reload');
+          }
+        } catch (cartError) {
+          console.error('Error reloading cart:', cartError);
         }
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
+        
+        // Navigate after a delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        console.log('Navigating to /myorders');
+        navigate('/myorders', { replace: true });
       } else {
         setMessage('Payment Failed. Redirecting...');
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        navigate('/', { replace: true });
       }
     } catch (error) {
       console.error("Verification error:", error);
       setMessage('Verification Failed. Redirecting...');
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      navigate('/', { replace: true });
     }
   }
 
   useEffect(() => {
-    verifyPayment();
-  }, []);
+    if (success && orderId && !verified) {
+      verifyPayment();
+    }
+  }, [success, orderId]);
 
   return (
     <div className='verify'>

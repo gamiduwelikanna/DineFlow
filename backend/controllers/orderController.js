@@ -66,7 +66,7 @@ const verifyOrder = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: "Error verifying order" });
-    }ß
+    }
 }
 
 
