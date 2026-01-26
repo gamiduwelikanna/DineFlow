@@ -13,7 +13,22 @@ const App = () => {
   
   return (
     <div>
-      <ToastContainer />
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{
+          fontSize: '14px',
+          fontWeight: '500'
+        }}
+      />
       <Navbar/>
       <hr/>
       <div className='app-content'>

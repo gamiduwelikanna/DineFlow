@@ -8,23 +8,23 @@ const MyOrders = () => {
     const [loading, setLoading] = React.useState(true);
     const {url, token} = React.useContext(StoreContext);
 
-    React.useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.post(`${url}/api/order/userOrders`, {}, {headers: {token}});
-                if (response.data.success) {
-                    setData(response.data.orders);
-                } else {
-                    console.error("Failed to fetch orders");
-                }
-            } catch (error) {
-                console.error("Error fetching orders:", error);
-            } finally {
-                setLoading(false);
+    const fetchOrders = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post(`${url}/api/order/userOrders`, {}, {headers: {token}});
+            if (response.data.success) {
+                setData(response.data.orders);
+            } else {
+                console.error("Failed to fetch orders");
             }
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+        } finally {
+            setLoading(false);
         }
-        
+    }
+
+    React.useEffect(() => {
         if (token) {
             fetchOrders();
         } else {
@@ -65,7 +65,7 @@ const MyOrders = () => {
               <p>${order.amount.toFixed(2)}</p>
               <p>Items: {order.items.reduce((total, item) => total + item.quantity, 0)}</p>
               <p><span>&#x25cf;</span> <b>{order.status}</b></p>
-              <button>Track Order</button>
+              <button onClick={fetchOrders}>Track Order</button>
             </div>
           ))}
         </div>

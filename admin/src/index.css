@@ -26,3 +26,43 @@ hr{
 .app-content{
   display: flex;
 }
+
+/* Custom Toast Styling */
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 16px rgba(76, 175, 80, 0.3) !important;
+  font-weight: 500 !important;
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3) !important;
+  font-weight: 500 !important;
+}
+
+.Toastify__toast {
+  padding: 16px 20px !important;
+  min-height: 64px !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+.Toastify__progress-bar--success {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+.Toastify__progress-bar--error {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+.Toastify__close-button {
+  color: white !important;
+  opacity: 0.8 !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
+}
